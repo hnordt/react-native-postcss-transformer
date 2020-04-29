@@ -8,8 +8,16 @@ It works only with React Native v0.59 or newer and Expo SDK v33.0.0 or newer.
 
 ### Step 1: Install
 
+#### npm
+
 ```sh
 npm install --save-dev @hnordt/react-native-postcss-transformer
+```
+
+#### Yarn
+
+```sh
+yarn add --dev @hnordt/react-native-postcss-transformer
 ```
 
 ### Step 2: Add your PostCSS config and install your PostCSS plugins
@@ -101,8 +109,12 @@ import styles from "./tailwind.css"
 
 let styleSheet = StyleSheet.create(styles)
 
-export default function tw(classNames) {
-  return classNames.split(" ").map((className) => styleSheet[className])
+export default function tw(...args) {
+  return args
+    .filter(Boolean)
+    .flatMap((classNames) =>
+      classNames.split(" ").map((className) => styleSheet[className])
+    )
 }
 ```
 
@@ -118,6 +130,7 @@ export default function App() {
     <View style={tw("bg-gray-200 flex-1 justify-center items-center")}>
       <Text style={tw("text-gray-900")}>Hello Tailwind CSS!</Text>
       <Text style={tw("text-gray-900 mt-3")}>♥️</Text>
+      <Text style={tw("text-gray-900 mt-3", false && "I will not show")}>🚀</Text>
     </View>
   )
 }
@@ -125,10 +138,18 @@ export default function App() {
 
 ### Remember to install the Tailwind CSS dependencies
 
+#### npm
+
 ```sh
 npm install --save-dev tailwindcss @fullhuman/postcss-purgecss
 ```
 
+#### Yarn
+
+```sh
+yarn add --dev tailwindcss @fullhuman/postcss-purgecss
+```
+
 ## Acknowledgments
 
-This packaged was inspired by [react-native-postcss-transformer](https://github.com/kristerkari/react-native-postcss-transformer)
+This package was inspired by [react-native-postcss-transformer](https://github.com/kristerkari/react-native-postcss-transformer) and [tailwind-rn](https://github.com/vadimdemedes/tailwind-rn).
