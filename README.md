@@ -8,8 +8,16 @@ It works only with React Native v0.59 or newer and Expo SDK v33.0.0 or newer.
 
 ### Step 1: Install
 
+#### npm
+
 ```sh
 npm install --save-dev @hnordt/react-native-postcss-transformer
+```
+
+#### Yarn
+
+```sh
+yarn add --dev @hnordt/react-native-postcss-transformer
 ```
 
 ### Step 2: Add your PostCSS config and install your PostCSS plugins
@@ -130,10 +138,18 @@ export default function App() {
 
 ### Remember to install the Tailwind CSS dependencies
 
+#### npm
+
 ```sh
 npm install --save-dev tailwindcss @fullhuman/postcss-purgecss
 ```
 
+#### Yarn
+
+```sh
+yarn add --dev tailwindcss @fullhuman/postcss-purgecss
+```
+
 ## Acknowledgments
 
-This packaged was inspired by [react-native-postcss-transformer](https://github.com/kristerkari/react-native-postcss-transformer) and [tailwind-rn](https://github.com/vadimdemedes/tailwind-rn)
+This packaged was inspired by [react-native-postcss-transformer](https://github.com/kristerkari/react-native-postcss-transformer) and [tailwind-rn](https://github.com/vadimdemedes/tailwind-rn).
