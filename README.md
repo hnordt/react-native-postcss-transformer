@@ -2,7 +2,7 @@
 
 A babel transformer that adds CSS support for React Native apps.
 
-It works only with React Native v0.59 or newer and Expo SDK v31.0.0 or newer.
+It works only with React Native v0.59 or newer and Expo SDK v33.0.0 or newer.
 
 ## Installation and configuration
 
