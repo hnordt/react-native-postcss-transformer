@@ -57,7 +57,7 @@ let supportedPropNames = [
   "justifyContent",
   "left",
   // "letterSpacing",
-  // "lineHeight",
+  "lineHeight",
   "margin",
   "marginBottom",
   "marginEnd",
@@ -109,6 +109,7 @@ let supportedPropNames = [
 
 let supportedValuesByPropName = {
   borderStyle: ["solid", "dotted", "dashed"],
+  lineHeight: (value) => String(value).endsWith("rem"),
   display: ["none", "flex"],
   position: ["relative", "absolute"],
   overflow: ["visible", "hidden", "scroll"],
@@ -129,18 +130,32 @@ function isValidDeclaration(declaration) {
     return false
   }
 
-  if (
-    supportedValuesByPropName[propName] &&
-    !supportedValuesByPropName[propName].includes(declaration.value)
-  ) {
-    return false
+  let supportedValues = supportedValuesByPropName[propName]
+
+  if (supportedValues) {
+    if (typeof supportedValues === "function") {
+      if (!supportedValues(declaration.value)) {
+        return false
+      }
+    }
+
+    if (!supportedValues.includes(declaration.value)) {
+      return false
+    }
   }
 
-  if (
-    unsupportedValuesByPropName[propName] &&
-    unsupportedValuesByPropName[propName].includes(declaration.value)
-  ) {
-    return false
+  let unsupportedValues = unsupportedValuesByPropName[propName]
+
+  if (unsupportedValues) {
+    if (typeof unsupportedValues === "function") {
+      if (unsupportedValues(declaration.value)) {
+        return false
+      }
+    }
+
+    if (unsupportedValues.includes(declaration.value)) {
+      return false
+    }
   }
 
   return true
