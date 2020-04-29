@@ -44,9 +44,9 @@ If you are using [Expo](https://expo.io), you also need to add this to `app.json
 }
 ```
 
-## Usage with TailwindCSS
+## Usage with Tailwind CSS
 
-Configure it normally. Sample configuration:
+Configure Tailwind CSS normally. Sample configuration:
 
 ### postcss.config.js
 
@@ -72,7 +72,7 @@ module.exports = {
 ```js
 module.exports = {
   theme: {},
-  variants: [], // For RN you want to make sure it's always an empty array
+  variants: [], // For RN make sure variants is always an empty array
   plugins: [],
 }
 ```
@@ -82,8 +82,7 @@ module.exports = {
 You can create that file anywhere. You can also use any name, `tailwind.css` is just an example.
 
 ```css
-/* For RN you'll want to include Tailwind utilities only */
-@tailwind utilities;
+@tailwind utilities; /* For RN make sure to include Tailwind utilities only */
 
 .my-custom-css {
   background-color: blue;
@@ -92,7 +91,9 @@ You can create that file anywhere. You can also use any name, `tailwind.css` is 
 
 ### tailwind.js
 
-You can create a specific file to import your styles and add a simple `tw()` utility. It's optional, you can also use the imported styles directly (they are just an object, so you might want to create a StyleSheet).
+You can create a specific file to import your styles and add a simple `tw()` utility.
+
+It's completely optional, you can also use the imported styles directly (the imported styles are just an object, so you might want to create a `StyleSheet`).
 
 ```js
 import { StyleSheet } from "react-native"
@@ -122,7 +123,7 @@ export default function App() {
 }
 ```
 
-### Remember to install the dependencies manually
+### Remember to install the Tailwind CSS dependencies
 
 ```sh
 npm install --save-dev tailwindcss @fullhuman/postcss-purgecss
@@ -131,7 +132,3 @@ npm install --save-dev tailwindcss @fullhuman/postcss-purgecss
 ## Acknowledgments
 
 This packaged was inspired by [react-native-postcss-transformer](https://github.com/kristerkari/react-native-postcss-transformer)
-
-```
-
-```
