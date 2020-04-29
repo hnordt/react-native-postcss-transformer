@@ -177,7 +177,7 @@ function processDeclarations(declarations) {
 
 function remToPx(value) {
   return typeof value === "string" && value.endsWith("rem")
-    ? `${parseFloat(value) * 16}px`
+    ? parseFloat(value) * 16 + "px"
     : value
 }
 
