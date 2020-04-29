@@ -123,14 +123,14 @@ let supportedPropNames = [
   "zIndex",
 ]
 
-let supportedPropValues = {
+let supportedValuesByPropName = {
   borderStyle: ["solid", "dotted", "dashed"],
   display: ["none", "flex"],
   position: ["relative", "absolute"],
   overflow: ["visible", "hidden", "scroll"],
 }
 
-let unsupportedPropValues = {
+let unsupportedValuesByPropName = {
   zIndex: ["auto"],
 }
 
@@ -146,15 +146,15 @@ function isValidDeclaration(declaration) {
   }
 
   if (
-    supportedPropValues[propName] &&
-    !supportedPropValues[propName].includes(declaration.value)
+    supportedValuesByPropName[propName] &&
+    !supportedValuesByPropName[propName].includes(declaration.value)
   ) {
     return false
   }
 
   if (
-    unsupportedPropValues[propName] &&
-    unsupportedPropValues[propName].includes(declaration.value)
+    unsupportedValuesByPropName[propName] &&
+    unsupportedValuesByPropName[propName].includes(declaration.value)
   ) {
     return false
   }
