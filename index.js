@@ -1,7 +1,7 @@
 let babelTransformer = require("metro-react-native-babel-transformer")
-let css = require("css")
 let postcss = require("postcss")
 let postcssrc = require("postcss-load-config")
+let css = require("css")
 let css2rn = require("css-to-react-native")
 
 let supportedPropNames = [
