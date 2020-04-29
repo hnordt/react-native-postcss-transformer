@@ -24,6 +24,8 @@ yarn add --dev @hnordt/react-native-postcss-transformer
 
 Add your PostCSS configuration to [one of the supported config formats](https://github.com/michael-ciniawsky/postcss-load-config), e.g. `package.json`, `.postcssrc`, `postcss.config.js`, etc.
 
+**Important:** if you change your PostCSS config, or any PostCSS plugin config (like Tailwind CSS), you'll need to restart the React Native packager and clean its cache. For React Native your can run `react-native start --reset-cache`, or `expo start --clear` if you are using [Expo](https://expo.io).
+
 ### Step 3: Configure the React Native packager
 
 Add this to `metro.config.js` in your project's root (create the file if it does not exist already):
