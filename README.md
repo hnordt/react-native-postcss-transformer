@@ -136,4 +136,4 @@ npm install --save-dev tailwindcss @fullhuman/postcss-purgecss
 
 ## Acknowledgments
 
-This packaged was inspired by [react-native-postcss-transformer](https://github.com/kristerkari/react-native-postcss-transformer)
+This packaged was inspired by [react-native-postcss-transformer](https://github.com/kristerkari/react-native-postcss-transformer) and [tailwind-rn](https://github.com/vadimdemedes/tailwind-rn)
