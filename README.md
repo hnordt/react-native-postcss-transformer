@@ -46,8 +46,92 @@ If you are using [Expo](https://expo.io), you also need to add this to `app.json
 
 ## Usage with TailwindCSS
 
-TODO
+Configure it normally. Sample configuration:
+
+### postcss.config.js
+
+```js
+module.exports = {
+  plugins: [
+    require("tailwindcss"),
+    ...(process.env.NODE_ENV === "production"
+      ? [
+          require("@fullhuman/postcss-purgecss")({
+            content: ["./src/**/*.js"],
+            defaultExtractor: (content) =>
+              content.match(/[\w-/.:]+(?<!:)/g) || [],
+          }),
+        ]
+      : []),
+  ],
+}
+```
+
+### tailwind.config.js
+
+```js
+module.exports = {
+  theme: {},
+  variants: [], // For RN you want to make sure it's always an empty array
+  plugins: [],
+}
+```
+
+### tailwind.css
+
+You can create that file anywhere. You can also use any name, `tailwind.css` is just an example.
+
+```css
+/* For RN you'll want to include Tailwind utilities only */
+@tailwind utilities;
+
+.my-custom-css {
+  background-color: blue;
+}
+```
+
+### tailwind.js
+
+You can create a specific file to import your styles and add a simple `tw()` utility. It's optional, you can also use the imported styles directly (they are just an object, so you might want to create a StyleSheet).
+
+```js
+import { StyleSheet } from "react-native"
+import styles from "./tailwind.css"
+
+let sheet = StyleSheet.create(styles)
+
+let tw = (str) => str.split(" ").map((style) => sheet[style])
+
+export default tw
+```
+
+### App.js
+
+```js
+import React from "react"
+import { View, Text } from "react-native"
+import tw from "./tailwind"
+
+export default function App() {
+  return (
+    <View style={tw("bg-gray-200 flex-1 justify-center items-center")}>
+      <Text style={tw("text-gray-900")}>Hello Tailwind CSS!</Text>
+      <Text style={tw("text-gray-900 mt-3")}>♥️</Text>
+    </View>
+  )
+}
+```
+
+### Remember to install the dependencies manually
+
+```sh
+npm install --save-dev tailwindcss @fullhuman/postcss-purgecss
+```
 
 ## Acknowledgments
 
 This packaged was inspired by [react-native-postcss-transformer](https://github.com/kristerkari/react-native-postcss-transformer)
+
+```
+
+```
