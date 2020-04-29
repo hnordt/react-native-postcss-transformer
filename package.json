@@ -1,0 +1,14 @@
+{
+  "name": "@hnordt/react-native-postcss-transformer",
+  "description": "A babel transformer that adds CSS support for React Native apps",
+  "version": "0.0.1",
+  "license": "MIT",
+  "repository": "https://github.com/hnordt/react-native-postcss-transformer",
+  "dependencies": {
+    "css": "2.2.4",
+    "css-to-react-native": "3.0.0",
+    "metro-react-native-babel-transformer": "0.59.0",
+    "postcss": "7.0.27",
+    "postcss-load-config": "2.1.0"
+  }
+}
