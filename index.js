@@ -135,7 +135,7 @@ let unsupportedValuesByPropName = {
 }
 
 function isValidSelector(selector) {
-  return selector.match(/(\s|:)/)
+  return !selector.match(/(\s|:)/)
 }
 
 function isValidDeclaration(declaration) {
@@ -201,7 +201,7 @@ module.exports.transform = async (params) => {
       (acc, rule) => ({
         ...acc,
         ...rule.selectors.reduce((acc, selector) => {
-          if (isValidSelector(selector)) {
+          if (!isValidSelector(selector)) {
             return acc
           }
 
