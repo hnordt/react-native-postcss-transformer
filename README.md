@@ -91,7 +91,7 @@ You can create that file anywhere. You can also use any name, `tailwind.css` is 
 
 ### tailwind.js
 
-You can create a specific file to import your styles and add a simple `tw()` utility.
+You can create a specific file to import your Tailwind CSS styles and add a simple `tw()` utility to make it easier to consume the amazing Tailwind classes.
 
 It's completely optional, you can also use the imported styles directly (the imported styles are just an object, so you might want to create a `StyleSheet`).
 
