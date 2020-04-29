@@ -101,8 +101,12 @@ import styles from "./tailwind.css"
 
 let styleSheet = StyleSheet.create(styles)
 
-export default function tw(classNames) {
-  return classNames.split(" ").map((className) => styleSheet[className])
+export default function tw(...args) {
+  return args
+    .filter(Boolean)
+    .flatMap((classNames) =>
+      classNames.split(" ").map((className) => styleSheet[className])
+    )
 }
 ```
 
@@ -118,6 +122,7 @@ export default function App() {
     <View style={tw("bg-gray-200 flex-1 justify-center items-center")}>
       <Text style={tw("text-gray-900")}>Hello Tailwind CSS!</Text>
       <Text style={tw("text-gray-900 mt-3")}>♥️</Text>
+      <Text style={tw("text-gray-900 mt-3", false && "I will not show")}>🚀</Text>
     </View>
   )
 }
