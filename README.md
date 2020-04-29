@@ -99,11 +99,11 @@ It's completely optional, you can also use the imported styles directly (the imp
 import { StyleSheet } from "react-native"
 import styles from "./tailwind.css"
 
-let sheet = StyleSheet.create(styles)
+let styleSheet = StyleSheet.create(styles)
 
-let tw = (str) => str.split(" ").map((style) => sheet[style])
-
-export default tw
+export default function tw(classNames) {
+  return classNames.split(" ").map((className) => styleSheet[className])
+}
 ```
 
 ### App.js
