@@ -1,7 +1,7 @@
 {
   "name": "@hnordt/react-native-postcss-transformer",
   "description": "A babel transformer that adds PostCSS support for React Native apps",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "author": "Heliton Nordt",
   "repository": "https://github.com/hnordt/react-native-postcss-transformer",
