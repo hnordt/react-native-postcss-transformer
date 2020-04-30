@@ -2,6 +2,7 @@ let babelTransformer = require("metro-react-native-babel-transformer")
 let postcss = require("postcss")
 let postcssrc = require("postcss-load-config")
 let css = require("css")
+let boxShadow = require("css-box-shadow")
 let css2rn = require("css-to-react-native")
 
 let supportedPropNames = [
@@ -36,6 +37,7 @@ let supportedPropNames = [
   "borderTopWidth",
   "borderWidth",
   "bottom",
+  "boxShadow",
   "color",
   "direction",
   "display",
@@ -119,6 +121,29 @@ let unsupportedValuesByPropName = {
   zIndex: ["auto"],
 }
 
+let valueTransformersByPropName = {
+  boxShadow: (value) => {
+    try {
+      let result = boxShadow.parse(value)
+
+      return (
+        [
+          result[0].offsetX,
+          result[0].offsetY,
+          forceNumber(result[0].blurRadius) +
+            forceNumber(result[0].spreadRadius),
+        ]
+          .map((value) => (value || 0) + "px")
+          .join(" ") +
+        " " +
+        result[0].color.replace(/none|currentColor/, "transparent")
+      )
+    } catch (error) {
+      return "none"
+    }
+  },
+}
+
 function isSupportedSelector(selector) {
   return !selector.match(/(\s|:)/)
 }
@@ -132,28 +157,26 @@ function isSupportedDeclaration(declaration) {
 
   let supportedValues = supportedValuesByPropName[propName]
 
-  if (supportedValues && !supportedValues.includes(declaration.value)) {
-    return false
-  }
-
-  if (
-    typeof supportedValues === "function" &&
-    !supportedValues(declaration.value)
-  ) {
-    return false
+  if (supportedValues) {
+    if (typeof supportedValues === "function") {
+      if (!supportedValues(declaration.value)) {
+        return false
+      }
+    } else if (!supportedValues.includes(declaration.value)) {
+      return false
+    }
   }
 
   let unsupportedValues = unsupportedValuesByPropName[propName]
 
-  if (unsupportedValues && unsupportedValues.includes(declaration.value)) {
-    return false
-  }
-
-  if (
-    typeof unsupportedValues === "function" &&
-    unsupportedValues(declaration.value)
-  ) {
-    return false
+  if (unsupportedValues) {
+    if (typeof unsupportedValues === "function") {
+      if (unsupportedValues(declaration.value)) {
+        return false
+      }
+    } else if (unsupportedValues.includes(declaration.value)) {
+      return false
+    }
   }
 
   return true
@@ -165,11 +188,24 @@ function getStyleName(selector) {
 
 function processDeclarations(declarations) {
   return css2rn.default(
-    declarations.map((declaration) => [
-      declaration.property,
-      remToPx(declaration.value),
-    ])
+    declarations.map((declaration) => {
+      let valueTransformer =
+        valueTransformersByPropName[
+          css2rn.getPropertyName(declaration.property)
+        ]
+
+      return [
+        declaration.property,
+        valueTransformer
+          ? valueTransformer(declaration.value)
+          : remToPx(declaration.value),
+      ]
+    })
   )
+}
+
+function forceNumber(value) {
+  return typeof value === "number" ? value : 0
 }
 
 function remToPx(value) {
