@@ -73,7 +73,7 @@ module.exports = {
   theme: {},
   variants: [], // For RN make sure variants is always an empty array
   purge: {
-    content: ["./src/**/*.js"],
+    content: ["src/**/*.js"],
     enabled: process.env.BABEL_ENV === "production",
   },
   plugins: [require("@tailwindcss/ui")],
@@ -125,7 +125,9 @@ export default function App() {
     <View style={tw("bg-gray-200 flex-1 justify-center items-center")}>
       <Text style={tw("text-gray-900")}>Hello Tailwind CSS!</Text>
       <Text style={tw("text-gray-900 mt-3")}>♥️</Text>
-      <Text style={tw("text-gray-900 mt-3", false && "I will not show")}>🚀</Text>
+      <Text style={tw("text-gray-900 mt-3", false && "I will not show")}>
+        🚀
+      </Text>
     </View>
   )
 }
