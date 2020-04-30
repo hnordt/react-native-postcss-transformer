@@ -132,30 +132,28 @@ function isSupportedDeclaration(declaration) {
 
   let supportedValues = supportedValuesByPropName[propName]
 
-  if (supportedValues) {
-    if (typeof supportedValues === "function") {
-      if (!supportedValues(declaration.value)) {
-        return false
-      }
-    }
+  if (supportedValues && !supportedValues.includes(declaration.value)) {
+    return false
+  }
 
-    if (!supportedValues.includes(declaration.value)) {
-      return false
-    }
+  if (
+    typeof supportedValues === "function" &&
+    !supportedValues(declaration.value)
+  ) {
+    return false
   }
 
   let unsupportedValues = unsupportedValuesByPropName[propName]
 
-  if (unsupportedValues) {
-    if (typeof unsupportedValues === "function") {
-      if (unsupportedValues(declaration.value)) {
-        return false
-      }
-    }
+  if (unsupportedValues && unsupportedValues.includes(declaration.value)) {
+    return false
+  }
 
-    if (unsupportedValues.includes(declaration.value)) {
-      return false
-    }
+  if (
+    typeof unsupportedValues === "function" &&
+    unsupportedValues(declaration.value)
+  ) {
+    return false
   }
 
   return true
