@@ -119,11 +119,11 @@ let unsupportedValuesByPropName = {
   zIndex: ["auto"],
 }
 
-function isValidSelector(selector) {
+function isSupportedSelector(selector) {
   return !selector.match(/(\s|:)/)
 }
 
-function isValidDeclaration(declaration) {
+function isSupportedDeclaration(declaration) {
   let propName = css2rn.getPropertyName(declaration.property)
 
   if (!supportedPropNames.includes(propName)) {
@@ -194,30 +194,31 @@ module.exports.transform = async (params) => {
 
   let ast = css.parse(result.css)
 
-  let styles = ast.stylesheet.rules
-    .filter((rule) => rule.type === "rule")
-    .reduce(
-      (acc, rule) => ({
-        ...acc,
-        ...rule.selectors.reduce((acc, selector) => {
-          if (!isValidSelector(selector)) {
-            return acc
-          }
+  let styles = ast.stylesheet.rules.reduce((acc, rule) => {
+    if (rule.type !== "rule") {
+      return acc
+    }
 
-          let declarations = rule.declarations.filter(isValidDeclaration)
+    return {
+      ...acc,
+      ...rule.selectors.reduce((acc, selector) => {
+        if (!isSupportedSelector(selector)) {
+          return acc
+        }
 
-          if (declarations.length === 0) {
-            return acc
-          }
+        let declarations = rule.declarations.filter(isSupportedDeclaration)
 
-          return {
-            ...acc,
-            [getStyleName(selector)]: processDeclarations(declarations),
-          }
-        }, {}),
-      }),
-      {}
-    )
+        if (declarations.length === 0) {
+          return acc
+        }
+
+        return {
+          ...acc,
+          [getStyleName(selector)]: processDeclarations(declarations),
+        }
+      }, {}),
+    }
+  }, {})
 
   return babelTransformer.transform({
     ...params,
