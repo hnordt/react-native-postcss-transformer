@@ -155,14 +155,26 @@ function isSupportedDeclaration(declaration) {
     return false
   }
 
+  if (!isSupportedValue(propName, declaration.value)) {
+    return false
+  }
+
+  return true
+}
+
+function isSupportedValue(propName, value) {
+  if (String(value).includes("var(--")) {
+    return false
+  }
+
   let supportedValues = supportedValuesByPropName[propName]
 
   if (supportedValues) {
     if (typeof supportedValues === "function") {
-      if (!supportedValues(declaration.value)) {
+      if (!supportedValues(value)) {
         return false
       }
-    } else if (!supportedValues.includes(declaration.value)) {
+    } else if (!supportedValues.includes(value)) {
       return false
     }
   }
@@ -171,10 +183,10 @@ function isSupportedDeclaration(declaration) {
 
   if (unsupportedValues) {
     if (typeof unsupportedValues === "function") {
-      if (unsupportedValues(declaration.value)) {
+      if (unsupportedValues(value)) {
         return false
       }
-    } else if (unsupportedValues.includes(declaration.value)) {
+    } else if (unsupportedValues.includes(value)) {
       return false
     }
   }
