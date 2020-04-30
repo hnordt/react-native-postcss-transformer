@@ -62,18 +62,7 @@ Configure Tailwind CSS normally. Sample configuration:
 
 ```js
 module.exports = {
-  plugins: [
-    require("tailwindcss"),
-    ...(process.env.NODE_ENV === "production"
-      ? [
-          require("@fullhuman/postcss-purgecss")({
-            content: ["./src/**/*.js"],
-            defaultExtractor: (content) =>
-              content.match(/[\w-/.:]+(?<!:)/g) || [],
-          }),
-        ]
-      : []),
-  ],
+  plugins: [require("tailwindcss")],
 }
 ```
 
@@ -83,7 +72,11 @@ module.exports = {
 module.exports = {
   theme: {},
   variants: [], // For RN make sure variants is always an empty array
-  plugins: [],
+  purge: {
+    content: ["./src/**/*.js"],
+    enabled: process.env.BABEL_ENV === "production",
+  },
+  plugins: [require("@tailwindcss/ui")],
 }
 ```
 
@@ -143,13 +136,13 @@ export default function App() {
 #### npm
 
 ```sh
-npm install --save-dev tailwindcss @fullhuman/postcss-purgecss
+npm install --save-dev tailwindcss @tailwindcss/ui
 ```
 
 #### Yarn
 
 ```sh
-yarn add --dev tailwindcss @fullhuman/postcss-purgecss
+yarn add --dev tailwindcss @tailwindcss/ui
 ```
 
 ## Acknowledgments
