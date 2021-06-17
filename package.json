@@ -10,7 +10,7 @@
     "css-box-shadow": "1.0.0-3",
     "css-to-react-native": "3.0.0",
     "metro-react-native-babel-transformer": "0.59.0",
-    "postcss": "7.0.27",
+    "postcss": "7.0.36",
     "postcss-load-config": "2.1.0"
   }
 }
